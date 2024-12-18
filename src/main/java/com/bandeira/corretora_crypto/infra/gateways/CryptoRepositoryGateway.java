@@ -24,7 +24,7 @@ public class CryptoRepositoryGateway implements CryptoGateway{
     }
 
     @Override
-    public Crypto findByName(String name) {
+        public Crypto findByName(String name) {
         var crypto = cryptoRepository.findByName(name)
                 .orElseThrow(CryptoNotFoundException::new);
 
@@ -40,6 +40,8 @@ public class CryptoRepositoryGateway implements CryptoGateway{
     public List<Crypto> findByRecentLaunch() {
         return List.of();
     }
+
+
 
 
 }

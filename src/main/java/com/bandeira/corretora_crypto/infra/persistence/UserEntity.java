@@ -30,7 +30,7 @@ public class UserEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     @OrderBy("date DESC")
-    private List<Transaction> transactions = new ArrayList<>();
+    private List<TransactionEntity> transactions = new ArrayList<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private WalletEntity wallet;

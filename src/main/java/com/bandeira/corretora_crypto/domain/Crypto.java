@@ -1,6 +1,6 @@
 package com.bandeira.corretora_crypto.domain;
 
-import com.bandeira.corretora_crypto.infra.persistence.Transaction;
+import com.bandeira.corretora_crypto.infra.persistence.TransactionEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,5 +22,5 @@ public class Crypto {
 
     private BigDecimal price;
 
-    private List<Transaction> transactions = new ArrayList<>();
+    private List<TransactionEntity> transactions = new ArrayList<>();
 }

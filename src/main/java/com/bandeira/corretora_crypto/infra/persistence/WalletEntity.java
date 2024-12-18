@@ -25,9 +25,21 @@ public class WalletEntity {
     @Column(nullable = true)
     private BigDecimal balance;
 
+    @Column
+    private BigDecimal totalInvested = BigDecimal.ZERO;
+
     @ElementCollection
     @CollectionTable(name = "wallet", joinColumns = @JoinColumn(name = "wallet_id"))
     @MapKeyColumn(name = "crypto_name")
     @Column(name = "quantity")
     private Map<String, BigDecimal> assets = new HashMap<>();
+
+
+    public void addInvestment(BigDecimal amount) {
+        this.totalInvested = this.totalInvested.add(amount);
+    }
+
+    public void subtractInvestment(BigDecimal amount) {
+        this.totalInvested = this.totalInvested.subtract(amount);
+    }
 }

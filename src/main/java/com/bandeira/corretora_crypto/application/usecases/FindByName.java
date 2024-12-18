@@ -13,7 +13,7 @@ public class FindByName {
         this.cryptoGateway = cryptoGateway;
     }
 
-    public Optional<Crypto> execute(String name){
+    public Crypto execute(String name){
         return cryptoGateway.findByName(name);
     }
 }

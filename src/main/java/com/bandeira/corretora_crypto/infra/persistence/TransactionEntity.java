@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "tb_transactions")
-public class Transaction {
+public class TransactionEntity {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
@@ -36,4 +36,15 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TransactionType transactionType;
+
+
+    public TransactionEntity(UserEntity user, CryptoEntity crypto, BigDecimal quantity
+            , BigDecimal priceAtTransaction, LocalDateTime date, TransactionType transactionType) {
+        this.user = user;
+        this.crypto = crypto;
+        this.quantity = quantity;
+        this.priceAtTransaction = priceAtTransaction;
+        this.date = date;
+        this.transactionType = transactionType;
+    }
 }

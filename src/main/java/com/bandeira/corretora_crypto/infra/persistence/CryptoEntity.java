@@ -29,5 +29,5 @@ public class CryptoEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "crypto")
-    private List<Transaction> transactions = new ArrayList<>();
+    private List<TransactionEntity> transactions = new ArrayList<>();
 }
