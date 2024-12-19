@@ -7,7 +7,7 @@ public class WalletMapper {
 
     public Wallet toWallet(WalletEntity walletEntity){
         return new Wallet(walletEntity.getId(), walletEntity.getUser(), walletEntity.getBalance()
-                ,walletEntity.getAssets()
+                , walletEntity.getTotalInvested(),walletEntity.getAssets()
                 );
     }
 }

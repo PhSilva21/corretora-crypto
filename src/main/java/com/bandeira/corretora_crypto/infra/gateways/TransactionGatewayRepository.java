@@ -7,6 +7,7 @@ import com.bandeira.corretora_crypto.infra.exceptions.CryptoNotFoundException;
 import com.bandeira.corretora_crypto.infra.exceptions.InsufficientBalanceException;
 import com.bandeira.corretora_crypto.infra.exceptions.InsufficientCryptoException;
 import com.bandeira.corretora_crypto.infra.exceptions.UserNotFoundException;
+import com.bandeira.corretora_crypto.infra.persistence.TransactionEntity;
 import com.bandeira.corretora_crypto.infra.persistence.repository.CryptoRepository;
 import com.bandeira.corretora_crypto.infra.persistence.repository.TransactionRepository;
 import com.bandeira.corretora_crypto.infra.persistence.repository.UserRepository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class TransactionGatewayRepository implements TransactionGateway{
@@ -144,6 +146,11 @@ public class TransactionGatewayRepository implements TransactionGateway{
                 , TransactionType.BUY));
 
         transactionRepository.save(transaction);
+    }
+
+    public List<TransactionEntity> findByTransactionByUserId(Long id){
+        return transactionRepository.findAll().stream()
+                .filter(t -> t.getUser().getId().equals(id)).toList();
     }
 
 

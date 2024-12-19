@@ -26,7 +26,7 @@ public class WalletEntity {
     private BigDecimal balance;
 
     @Column
-    private BigDecimal totalInvested = BigDecimal.ZERO;
+    private BigDecimal currentValueInvested = BigDecimal.ZERO;
 
     @ElementCollection
     @CollectionTable(name = "wallet", joinColumns = @JoinColumn(name = "wallet_id"))
@@ -36,10 +36,10 @@ public class WalletEntity {
 
 
     public void addInvestment(BigDecimal amount) {
-        this.totalInvested = this.totalInvested.add(amount);
+        this.currentValueInvested = this.currentValueInvested.add(amount);
     }
 
     public void subtractInvestment(BigDecimal amount) {
-        this.totalInvested = this.totalInvested.subtract(amount);
+        this.currentValueInvested = this.currentValueInvested.subtract(amount);
     }
 }

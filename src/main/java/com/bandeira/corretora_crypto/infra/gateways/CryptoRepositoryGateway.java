@@ -6,6 +6,7 @@ import com.bandeira.corretora_crypto.infra.exceptions.CryptoNotFoundException;
 import com.bandeira.corretora_crypto.infra.persistence.repository.CryptoRepository;
 import com.bandeira.corretora_crypto.infra.util.CryptoMapper;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CryptoRepositoryGateway implements CryptoGateway{
@@ -41,7 +42,9 @@ public class CryptoRepositoryGateway implements CryptoGateway{
         return List.of();
     }
 
-
+    public BigDecimal findCryptoPriceByName(String name){
+        return findByName(name).getPrice();
+    }
 
 
 }

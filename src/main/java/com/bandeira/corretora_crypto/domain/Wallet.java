@@ -20,5 +20,7 @@ public class Wallet {
 
     private BigDecimal balance;
 
+    private BigDecimal currentValueInvested = BigDecimal.ZERO;
+
     private Map<String, BigDecimal> assets = new HashMap<>();
 }
