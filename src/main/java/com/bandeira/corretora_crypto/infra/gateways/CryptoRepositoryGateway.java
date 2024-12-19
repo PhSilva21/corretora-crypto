@@ -7,7 +7,9 @@ import com.bandeira.corretora_crypto.infra.persistence.repository.CryptoReposito
 import com.bandeira.corretora_crypto.infra.util.CryptoMapper;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CryptoRepositoryGateway implements CryptoGateway{
 
@@ -34,17 +36,65 @@ public class CryptoRepositoryGateway implements CryptoGateway{
 
     @Override
     public List<Crypto> findByPopularity() {
-        return List.of();
+
+        return findAll().stream()
+                .sorted(Comparator.comparingInt(Crypto::getPopularity).reversed())
+                .limit(10)
+                .map(c -> new Crypto(
+                        c.getId(),
+                        c.getSymbol(),
+                        c.getName(),
+                        c.getPrice(),
+                        c.getPopularity(),
+                        c.getLaunchDate(),
+                        c.getTransactions()
+                ))
+                .toList();
     }
 
+    public List<Crypto> findAll(){
+        return cryptoRepository.findAll().stream()
+                .map(c -> new Crypto(
+                        c.getId(),
+                        c.getSymbol(),
+                        c.getName(),
+                        c.getPrice(),
+                        c.getPopularity(),
+                        c.getLaunchDate(),
+                        c.getTransactions()
+                ))
+                .collect(Collectors.toList());
+    }
+    
     @Override
     public List<Crypto> findByRecentLaunch() {
-        return List.of();
+        return findAll().stream()
+                .sorted(Comparator.comparing(Crypto::getLaunchDate).reversed())
+                .limit(10)
+                .map(c -> new Crypto(
+                        c.getId(),
+                        c.getSymbol(),
+                        c.getName(),
+                        c.getPrice(),
+                        c.getPopularity(),
+                        c.getLaunchDate(),
+                        c.getTransactions()
+                ))
+                .collect(Collectors.toList());
     }
 
     public BigDecimal findCryptoPriceByName(String name){
         return findByName(name).getPrice();
     }
 
+    public Crypto findCryptoByNameToBuy(String name) {
+        var crypto = cryptoRepository.findByName(name)
+                .orElseThrow(CryptoNotFoundException::new);
 
+        crypto.incrementPopularity();
+
+        cryptoRepository.save(crypto);
+
+        return cryptoMapper.toCrypto(crypto);
+    }
 }

@@ -1,6 +1,7 @@
 package com.bandeira.corretora_crypto.infra.gateways;
 
 import com.bandeira.corretora_crypto.application.gateways.TransactionGateway;
+import com.bandeira.corretora_crypto.domain.Crypto;
 import com.bandeira.corretora_crypto.domain.enums.TransactionType;
 import com.bandeira.corretora_crypto.infra.dtos.*;
 import com.bandeira.corretora_crypto.infra.exceptions.CryptoNotFoundException;
@@ -52,7 +53,7 @@ public class TransactionGatewayRepository implements TransactionGateway{
     @Override
     public void buyCrypto(BuyCryptoDTO request) {
         var user = userRepositoryGateway.findById(request.userId());
-        var crypto = cryptoRepositoryGateway.findByName(request.cryptoName());
+        var crypto = cryptoRepositoryGateway.findCryptoByNameToBuy(request.cryptoName());
 
         var total = validateBuyTransaction(new ValidateBuyDTO(user, crypto, request.quantity()));
 
@@ -145,6 +146,8 @@ public class TransactionGatewayRepository implements TransactionGateway{
                 , request.quantity(), request.total(), LocalDateTime.now()
                 , TransactionType.BUY));
 
+        crypto.incrementPopularity();
+
         transactionRepository.save(transaction);
     }
 
@@ -152,6 +155,4 @@ public class TransactionGatewayRepository implements TransactionGateway{
         return transactionRepository.findAll().stream()
                 .filter(t -> t.getUser().getId().equals(id)).toList();
     }
-
-
 }

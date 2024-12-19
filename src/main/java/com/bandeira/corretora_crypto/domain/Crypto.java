@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,10 @@ public class Crypto {
     private String name;
 
     private BigDecimal price;
+
+    private Integer popularity;
+
+    private LocalDate launchDate;
 
     private List<TransactionEntity> transactions = new ArrayList<>();
 }

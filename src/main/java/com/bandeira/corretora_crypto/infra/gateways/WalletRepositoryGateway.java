@@ -115,4 +115,6 @@ public class WalletRepositoryGateway implements WalletGateway{
     private BigDecimal calculateProfitOrLoss(CalculateProfitOrLoss request){
         return request.currentValue().subtract(request.totalValue());
     }
+
+
 }

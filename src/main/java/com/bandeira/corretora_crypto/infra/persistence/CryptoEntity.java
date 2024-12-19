@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +26,20 @@ public class CryptoEntity {
     @Column(unique = true, nullable = false)
     private String name;
 
+    @Column
     private BigDecimal price;
+
+    @Column
+    private int popularity;
+
+    @Column
+    private LocalDate launchDate;
 
     @JsonIgnore
     @OneToMany(mappedBy = "crypto")
     private List<TransactionEntity> transactions = new ArrayList<>();
+
+    public void incrementPopularity() {
+        this.popularity++;
+    }
 }
