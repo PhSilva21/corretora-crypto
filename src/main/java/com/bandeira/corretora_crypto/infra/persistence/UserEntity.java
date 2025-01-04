@@ -34,4 +34,9 @@ public class UserEntity {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private WalletEntity wallet;
+
+    public UserEntity(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 }

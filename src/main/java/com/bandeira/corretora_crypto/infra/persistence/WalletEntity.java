@@ -42,4 +42,9 @@ public class WalletEntity {
     public void subtractInvestment(BigDecimal amount) {
         this.currentValueInvested = this.currentValueInvested.subtract(amount);
     }
+
+    public WalletEntity(UserEntity user) {
+        this.user = user;
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.bandeira.corretora_crypto.infra.gateways;
 
 import com.bandeira.corretora_crypto.application.gateways.WalletGateway;
+import com.bandeira.corretora_crypto.domain.User;
 import com.bandeira.corretora_crypto.domain.Wallet;
 import com.bandeira.corretora_crypto.domain.enums.TransactionType;
 import com.bandeira.corretora_crypto.infra.dtos.AssetDTO;
@@ -9,7 +10,9 @@ import com.bandeira.corretora_crypto.infra.dtos.FindByWalletResponseDTO;
 import com.bandeira.corretora_crypto.infra.exceptions.WalletNotFound;
 import com.bandeira.corretora_crypto.infra.persistence.TransactionEntity;
 
+import com.bandeira.corretora_crypto.infra.persistence.UserEntity;
 import com.bandeira.corretora_crypto.infra.persistence.repository.WalletRepository;
+import com.bandeira.corretora_crypto.infra.util.UserMapper;
 import com.bandeira.corretora_crypto.infra.util.WalletMapper;
 
 import java.math.BigDecimal;
@@ -26,14 +29,17 @@ public class WalletRepositoryGateway implements WalletGateway{
 
     private final CryptoRepositoryGateway cryptoRepositoryGateway;
 
+    private UserMapper userMapper;
+
     public WalletRepositoryGateway(WalletMapper walletMapper
             , WalletRepository walletRepository
             , TransactionGatewayRepository transactionGatewayRepository
-            , CryptoRepositoryGateway cryptoRepositoryGateway) {
+            , CryptoRepositoryGateway cryptoRepositoryGateway, UserMapper userMapper) {
         this.walletMapper = walletMapper;
         this.walletRepository = walletRepository;
         this.transactionGatewayRepository = transactionGatewayRepository;
         this.cryptoRepositoryGateway = cryptoRepositoryGateway;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -93,6 +99,12 @@ public class WalletRepositoryGateway implements WalletGateway{
                 .toList();
 
         return assets;
+    }
+
+    public void CreateWallet(UserEntity user){
+        var wallet = walletMapper.newWalletEntity(user);
+
+        walletRepository.save(wallet);
     }
 
     private BigDecimal calculateAveragePrice(List<TransactionEntity> transactions, String cryptoName) {

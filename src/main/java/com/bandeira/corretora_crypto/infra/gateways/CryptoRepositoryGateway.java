@@ -65,7 +65,7 @@ public class CryptoRepositoryGateway implements CryptoGateway{
                 ))
                 .collect(Collectors.toList());
     }
-    
+
     @Override
     public List<Crypto> findByRecentLaunch() {
         return findAll().stream()
