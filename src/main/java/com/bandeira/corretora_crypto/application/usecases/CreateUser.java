@@ -12,6 +12,6 @@ public class CreateUser {
     }
 
     public void execute(CreateUserDTO request){
-        userGateway.CreateUser(request);
+        userGateway.createUser(request);
     }
 }

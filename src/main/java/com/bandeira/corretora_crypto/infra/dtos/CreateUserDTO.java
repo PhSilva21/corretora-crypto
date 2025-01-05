@@ -4,6 +4,8 @@ public record CreateUserDTO(
 
         String email,
 
-        String password
+        String password,
+
+        String code
 ) {
 }
