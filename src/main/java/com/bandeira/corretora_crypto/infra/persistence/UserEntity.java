@@ -46,6 +46,7 @@ public class UserEntity implements UserDetails{
     public UserEntity(String email, String password, UserRole userRole) {
         this.email = email;
         this.password = password;
+        this.userRole = userRole;
     }
 
     @Override

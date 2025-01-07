@@ -10,7 +10,8 @@ import com.bandeira.corretora_crypto.infra.persistence.WalletEntity;
 public class UserMapper {
 
     public User toUserModel(UserEntity user){
-        return new User(user.getId(), user.getEmail(), user.getWallet());
+        return new User(user.getId(), user.getEmail(), user.getPassword(), user.getWallet()
+                , user.getUserRole());
     }
 
     public UserEntity toUserEntity(String email, String password, UserRole role){
