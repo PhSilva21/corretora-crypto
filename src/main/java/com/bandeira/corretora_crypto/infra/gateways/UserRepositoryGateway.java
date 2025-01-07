@@ -47,7 +47,7 @@ public class UserRepositoryGateway implements UserGateway{
     public void createUser(CreateUserDTO request) {
         validateEmail(request.email());
 
-        var user = userMapper.toUserEntity(request.email(), request.password());
+        var user = userMapper.toUserEntity(request.email(), request.password(), request.role());
 
         walletRepositoryGateway.CreateWallet(user);
 
@@ -84,7 +84,7 @@ public class UserRepositoryGateway implements UserGateway{
         }
     }
 
-    private UserDetails findByEmail(String email){
+    public UserDetails findByEmail(String email){
         return userRepository.findByEmail(email).orElseThrow(EmailIsNotYetRegisteredException::new);
     }
 }

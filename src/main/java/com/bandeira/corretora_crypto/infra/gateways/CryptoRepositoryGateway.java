@@ -36,19 +36,9 @@ public class CryptoRepositoryGateway implements CryptoGateway{
 
     @Override
     public List<Crypto> findByPopularity() {
-
         return findAll().stream()
                 .sorted(Comparator.comparingInt(Crypto::getPopularity).reversed())
                 .limit(10)
-                .map(c -> new Crypto(
-                        c.getId(),
-                        c.getSymbol(),
-                        c.getName(),
-                        c.getPrice(),
-                        c.getPopularity(),
-                        c.getLaunchDate(),
-                        c.getTransactions()
-                ))
                 .toList();
     }
 
@@ -71,15 +61,6 @@ public class CryptoRepositoryGateway implements CryptoGateway{
         return findAll().stream()
                 .sorted(Comparator.comparing(Crypto::getLaunchDate).reversed())
                 .limit(10)
-                .map(c -> new Crypto(
-                        c.getId(),
-                        c.getSymbol(),
-                        c.getName(),
-                        c.getPrice(),
-                        c.getPopularity(),
-                        c.getLaunchDate(),
-                        c.getTransactions()
-                ))
                 .collect(Collectors.toList());
     }
 

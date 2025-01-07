@@ -1,7 +1,6 @@
 package com.bandeira.corretora_crypto.infra.gateways;
 
 import com.bandeira.corretora_crypto.application.gateways.WalletGateway;
-import com.bandeira.corretora_crypto.domain.User;
 import com.bandeira.corretora_crypto.domain.Wallet;
 import com.bandeira.corretora_crypto.domain.enums.TransactionType;
 import com.bandeira.corretora_crypto.infra.dtos.AssetDTO;
@@ -14,11 +13,12 @@ import com.bandeira.corretora_crypto.infra.persistence.UserEntity;
 import com.bandeira.corretora_crypto.infra.persistence.repository.WalletRepository;
 import com.bandeira.corretora_crypto.infra.util.UserMapper;
 import com.bandeira.corretora_crypto.infra.util.WalletMapper;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-
+@Service
 public class WalletRepositoryGateway implements WalletGateway{
 
     private final WalletMapper walletMapper;
@@ -70,7 +70,7 @@ public class WalletRepositoryGateway implements WalletGateway{
         );
     }
 
-    private BigDecimal calculateTotalInvested(Long userId){
+    public BigDecimal calculateTotalInvested(Long userId){
         var transactions = transactionGatewayRepository.findByTransactionByUserId(userId);
 
         return transactions.stream()
@@ -78,7 +78,7 @@ public class WalletRepositoryGateway implements WalletGateway{
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private List<AssetDTO> calculateAssets(Wallet wallet){
+    public List<AssetDTO> calculateAssets(Wallet wallet){
 
         List<AssetDTO> assets = wallet.getAssets().entrySet().stream()
                 .map(entry -> {
@@ -107,7 +107,7 @@ public class WalletRepositoryGateway implements WalletGateway{
         walletRepository.save(wallet);
     }
 
-    private BigDecimal calculateAveragePrice(List<TransactionEntity> transactions, String cryptoName) {
+    public BigDecimal calculateAveragePrice(List<TransactionEntity> transactions, String cryptoName) {
         List<BigDecimal> purchasePrices = transactions.stream()
                 .filter(t -> t.getCrypto().getName().equals(cryptoName)
                         && t.getTransactionType() == TransactionType.BUY)
@@ -124,7 +124,7 @@ public class WalletRepositoryGateway implements WalletGateway{
         return total.divide(BigDecimal.valueOf(purchasePrices.size()), BigDecimal.ROUND_HALF_UP);
     }
 
-    private BigDecimal calculateProfitOrLoss(CalculateProfitOrLoss request){
+    public BigDecimal calculateProfitOrLoss(CalculateProfitOrLoss request){
         return request.currentValue().subtract(request.totalValue());
     }
 

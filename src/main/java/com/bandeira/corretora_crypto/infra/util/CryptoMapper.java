@@ -9,7 +9,7 @@ public class CryptoMapper {
 
     public Crypto toCrypto(CryptoEntity crypto){
         return new Crypto(crypto.getId(), crypto.getSymbol(), crypto.getName(), crypto.getPrice()
-                , crypto.getPopularity(), crypto.getTransactions());
+                , crypto.getPopularity(), crypto.getLaunchDate(), crypto.getTransactions());
     }
 
 
